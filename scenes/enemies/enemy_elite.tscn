@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bmsmn1cltryto"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy_elite.gd" id="1_elite_script"]
+[ext_resource type="Texture2D" uid="uid://b128icon" path="res://icon.svg" id="2_icon"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_elite"]
+radius = 26.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_elite_hit"]
+radius = 29.0
+
+[node name="EnemyElite" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_elite_script")
+speed = 105.0
+max_hp = 450.0
+damage = 25.0
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual"]
+modulate = Color(1, 0.15, 0.15, 1)
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("2_icon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_elite")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_elite_hit")

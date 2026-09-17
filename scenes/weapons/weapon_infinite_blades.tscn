@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ddjrnghj8j22k"]
+
+[ext_resource type="Script" path="res://scenes/weapons/weapon_infinite_blades.gd" id="1_blade_script"]
+
+[node name="WeaponInfiniteBlades" type="Node2D"]
+script = ExtResource("1_blade_script")

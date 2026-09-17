@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c6htjdbkm742w"]
+
+[ext_resource type="Script" path="res://scenes/weapons/weapon_solar_aura.gd" id="1_solar_script"]
+
+[node name="WeaponSolarAura" type="Node2D"]
+script = ExtResource("1_solar_script")

@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8player0001"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_player_script"]
+[ext_resource type="Texture2D" path="res://scenes/assets/images/sprite_player.png" id="2_knight_sprite"]
+[ext_resource type="PackedScene" uid="uid://c7weaponmm01" path="res://scenes/weapons/weapon_magic_missile.tscn" id="3_weapon"]
+[ext_resource type="Script" path="res://scenes/player/player_camera.gd" id="4_camera_script"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_player"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_magnet"]
+radius = 130.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_player_script")
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual"]
+scale = Vector2(0.23, 0.23)
+texture = ExtResource("2_knight_sprite")
+hframes = 6
+vframes = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_player")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+script = ExtResource("4_camera_script")
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="MagnetArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MagnetArea"]
+shape = SubResource("CircleShape2D_magnet")
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="WeaponMagicMissile" parent="Weapons" instance=ExtResource("3_weapon")]

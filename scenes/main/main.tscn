@@ -1,0 +1,288 @@
+[gd_scene load_steps=14 format=3 uid="uid://c5mainscene01"]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_main_script"]
+[ext_resource type="Script" path="res://scenes/main/grid_background.gd" id="2_grid_script"]
+[ext_resource type="PackedScene" uid="uid://c8player0001" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" uid="uid://c1spawner001" path="res://scenes/enemies/enemy_spawner.tscn" id="4_spawner"]
+[ext_resource type="Script" path="res://scenes/managers/upgrade_manager.gd" id="5_upg_mgr"]
+[ext_resource type="PackedScene" uid="uid://c7modal0000001" path="res://scenes/ui/level_up_modal.tscn" id="6_modal"]
+[ext_resource type="PackedScene" uid="uid://c3chestmodal01" path="res://scenes/ui/chest_modal.tscn" id="7_chest_modal"]
+[ext_resource type="PackedScene" uid="uid://c6shopmodal01" path="res://scenes/ui/shop_modal.tscn" id="8_shop_modal"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exp_bg"]
+bg_color = Color(0.08, 0.08, 0.12, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exp_fill"]
+bg_color = Color(0.2, 0.85, 0.65, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.15, 0.15, 0.15, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.18, 0.8, 0.44, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main_script")
+
+[node name="UpgradeManager" type="Node" parent="."]
+script = ExtResource("5_upg_mgr")
+
+[node name="GridBackground" type="Node2D" parent="."]
+script = ExtResource("2_grid_script")
+
+[node name="Gems" type="Node2D" parent="."]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Projectiles" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector2(640, 360)
+
+[node name="EnemySpawner" parent="." instance=ExtResource("4_spawner")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ExpBar" type="ProgressBar" parent="UI/HUD"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 10.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_exp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_exp_fill")
+max_value = 20.0
+show_percentage = false
+
+[node name="TopLeft" type="VBoxContainer" parent="UI/HUD"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 22.0
+offset_right = 264.0
+offset_bottom = 76.0
+
+[node name="Header" type="HBoxContainer" parent="UI/HUD/TopLeft"]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="UI/HUD/TopLeft/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Lv. 1"
+
+[node name="Spacer" type="Control" parent="UI/HUD/TopLeft/Header"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="UI/HUD/TopLeft/Header"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "HP: 100 / 100"
+
+[node name="HealthBar" type="ProgressBar" parent="UI/HUD/TopLeft"]
+custom_minimum_size = Vector2(240, 18)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
+value = 100.0
+show_percentage = false
+
+[node name="TopCenter" type="VBoxContainer" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -180.0
+offset_top = 18.0
+offset_right = 180.0
+offset_bottom = 76.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="TimeLabel" type="Label" parent="UI/HUD/TopCenter"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "00:00"
+horizontal_alignment = 1
+
+[node name="FeverBanner" type="Label" parent="UI/HUD/TopCenter"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.1, 1)
+theme_override_font_sizes/font_size = 15
+text = "🔥 FEVER TIME! 몬스터 30% 증가 🔥"
+horizontal_alignment = 1
+
+[node name="TopRight" type="HBoxContainer" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -180.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = 54.0
+grow_horizontal = 0
+alignment = 2
+
+[node name="KillLabel" type="Label" parent="UI/HUD/TopRight"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Kills: 0"
+horizontal_alignment = 2
+
+[node name="GoldLabel" type="Label" parent="UI/HUD/TopRight"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.88, 0.3, 1)
+theme_override_font_sizes/font_size = 18
+text = "💰 0"
+horizontal_alignment = 2
+
+[node name="LevelUpModal" parent="UI" instance=ExtResource("6_modal")]
+visible = false
+
+[node name="GameOverPanel" type="PanelContainer" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UI/GameOverPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="UI/GameOverPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 32
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="UI/GameOverPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "생존 시간: 00:00  |  처치한 적: 0"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="UI/GameOverPanel/VBox"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="RestartGuide" type="Label" parent="UI/GameOverPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "[ R ] 또는 [ Space ] 키를 눌러 재시작"
+horizontal_alignment = 1
+
+[node name="ShopButton" type="Button" parent="UI/GameOverPanel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "🏛️ 영구 강화 상점"
+
+[node name="BossBarContainer" type="VBoxContainer" parent="UI/HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 48.0
+offset_right = 200.0
+offset_bottom = 78.0
+grow_horizontal = 2
+
+[node name="BossLabel" type="Label" parent="UI/HUD/BossBarContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 13
+text = "👿 뱀파이어 로드"
+horizontal_alignment = 1
+
+[node name="BossBar" type="ProgressBar" parent="UI/HUD/BossBarContainer"]
+custom_minimum_size = Vector2(400, 14)
+layout_mode = 2
+max_value = 1600.0
+show_percentage = false
+
+[node name="ChestModal" parent="UI" instance=ExtResource("7_chest_modal")]
+visible = false
+
+[node name="ShopModal" parent="UI" instance=ExtResource("8_shop_modal")]
+visible = false
+
+[node name="VictoryPanel" type="PanelContainer" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -110.0
+offset_right = 220.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="UI/VictoryPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="UI/VictoryPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 36
+text = "VICTORY!!"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="UI/VictoryPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "클리어 시간: 00:00  |  처치한 적: 0"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="UI/VictoryPanel/VBox"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+
+[node name="RestartGuide" type="Label" parent="UI/VictoryPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "[ R ] 키를 눌러 다시 시작"
+horizontal_alignment = 1
+
+[node name="ShopButton" type="Button" parent="UI/VictoryPanel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "🏛️ 영구 강화 상점"
+
+
