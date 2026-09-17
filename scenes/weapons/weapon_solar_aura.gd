@@ -9,6 +9,8 @@ var tick_timer: Timer
 var pulse_anim: float = 0.0
 
 func _ready() -> void:
+	z_index = -1
+	show_behind_parent = true
 	tick_timer = Timer.new()
 	tick_timer.wait_time = tick_rate
 	tick_timer.autostart = true
@@ -21,14 +23,20 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	var pulse: float = sin(pulse_anim) * 8.0
+	var pulse: float = sin(pulse_anim) * 7.0
+	var wave: float = cos(pulse_anim * 0.7) * 3.5
 	var r: float = radius + pulse
 	
-	# 작열하는 태양 오라 (금빛/주홍빛)
-	draw_circle(Vector2.ZERO, r, Color(1.0, 0.6, 0.1, 0.16))
-	draw_circle(Vector2.ZERO, r * 0.6, Color(1.0, 0.85, 0.2, 0.12))
-	draw_arc(Vector2.ZERO, r, 0, TAU, 48, Color(1.0, 0.75, 0.2, 0.6), 3.5)
-	draw_arc(Vector2.ZERO, r * 0.75, 0, TAU, 36, Color(1.0, 0.9, 0.4, 0.35), 2.0)
+	# 심연의 코스믹 네이비 오로라
+	draw_circle(Vector2.ZERO, r * 0.5, Color(0.05, 0.08, 0.32, 0.18))
+	draw_circle(Vector2.ZERO, r * 0.8, Color(0.08, 0.22, 0.55, 0.12))
+	draw_circle(Vector2.ZERO, r, Color(0.1, 0.38, 0.8, 0.07))
+	
+	# 몽환적으로 번지는 투명 오로라 외곽 림
+	draw_arc(Vector2.ZERO, r - 6.0, 0, TAU, 56, Color(0.2, 0.55, 0.95, 0.25), 4.0)
+	draw_arc(Vector2.ZERO, r, 0, TAU, 64, Color(0.3, 0.8, 1.0, 0.45 + wave * 0.03), 2.5)
+	draw_arc(Vector2.ZERO, r + 6.0, 0, TAU, 56, Color(0.18, 0.5, 0.9, 0.18), 4.5)
+	draw_arc(Vector2.ZERO, r + 12.0, 0, TAU, 48, Color(0.1, 0.3, 0.75, 0.08), 6.0)
 
 func _on_tick_timeout() -> void:
 	var enemies: Array = get_tree().get_nodes_in_group("enemy")

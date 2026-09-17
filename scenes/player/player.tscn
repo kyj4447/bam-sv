@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8player0001"]
+[gd_scene load_steps=8 format=3 uid="uid://c8player0001"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_player_script"]
 [ext_resource type="Texture2D" path="res://scenes/assets/images/sprite_player.png" id="2_knight_sprite"]
 [ext_resource type="PackedScene" uid="uid://c7weaponmm01" path="res://scenes/weapons/weapon_magic_missile.tscn" id="3_weapon"]
 [ext_resource type="Script" path="res://scenes/player/player_camera.gd" id="4_camera_script"]
+[ext_resource type="Shader" path="res://scenes/player/watermark_cleaner.gdshader" id="5_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cleaner"]
+shader = ExtResource("5_shader")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_player"]
-radius = 14.0
+radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_magnet"]
 radius = 130.0
@@ -17,9 +21,11 @@ collision_mask = 0
 script = ExtResource("1_player_script")
 
 [node name="Visual" type="Node2D" parent="."]
+z_index = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Visual"]
-scale = Vector2(0.23, 0.23)
+material = SubResource("ShaderMaterial_cleaner")
+scale = Vector2(0.115, 0.115)
 texture = ExtResource("2_knight_sprite")
 hframes = 6
 vframes = 6

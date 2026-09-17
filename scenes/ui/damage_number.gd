@@ -24,7 +24,7 @@ func setup(amount: float, is_critical: bool = false) -> void:
 	var target_y: float = randf_range(-45.0, -60.0)
 	var target_pos: Vector2 = position + Vector2(target_x, target_y)
 	
-	tween.tween_property(self, "position", target_pos, 0.55).set_trans(Tween.TRANS_OUT).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "position", target_pos, 0.55).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "scale", Vector2(1.25, 1.25), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.chain().tween_property(self, "scale", Vector2(0.8, 0.8), 0.3)
 	tween.parallel().tween_property(self, "modulate:a", 0.0, 0.35).set_delay(0.2)

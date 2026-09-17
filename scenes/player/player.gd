@@ -75,7 +75,7 @@ func _setup_sprite_texture() -> void:
 				sprite.vframes = 6
 				sprite.frame = 0
 				sprite.modulate = Color.WHITE
-				sprite.scale = Vector2(0.23, 0.23)
+				sprite.scale = Vector2(0.115, 0.115)
 				break
 
 func _physics_process(delta: float) -> void:
